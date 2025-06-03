@@ -43,20 +43,8 @@ function EquipoForm({ onAdd }) {
       params.append('estado', formData.estado);
       
       console.log('Enviando datos como FormData:', Object.fromEntries(params));      
-      // Primera opción: Usando URLSearchParams (application/x-www-form-urlencoded)
-      const response = await axios.post(
-        getApiUrl('EQUIPOS'), 
-        params,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          }
-        }
-      );
       
-      // Si el método anterior falla, intenta con esto:
-      /*      // Segunda opción: Usando JSON directo
+      
       const response = await axios({
         method: 'post',
         url: getApiUrl('EQUIPOS'),
@@ -66,7 +54,7 @@ function EquipoForm({ onAdd }) {
           'Accept': 'application/json'
         }
       });
-      */
+
         console.log('Respuesta del servidor:', response.data);
       onAdd(); // Actualizar la lista
       setFormData({ nombre: '', tipo: '', ubicacion: '', estado: '' }); // Limpiar el formulario
