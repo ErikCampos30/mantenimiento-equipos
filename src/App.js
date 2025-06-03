@@ -3,6 +3,7 @@ import EquiposList from './components/equiposlist';
 import EquipoForm from './components/equiposform';
 import { useState, useEffect } from 'react';
 import './App.css';
+import { getApiUrl } from './config/api';
 
 function App() {
   const [refrescar, setRefrescar] = useState(0);
@@ -12,7 +13,7 @@ function App() {
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
-        const response = await fetch('https://apex.oracle.com/pls/apex/erikworks/equipos/', {
+        const response = await fetch(getApiUrl('EQUIPOS'), {
           method: 'HEAD',
           headers: {
             'Accept': 'application/json'

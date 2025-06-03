@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getApiUrl } from '../config/api';
 
 function EquiposList() {
   const [equipos, setEquipos] = useState([]);
@@ -9,8 +10,8 @@ function EquiposList() {
     const fetchEquipos = async () => {
       setLoading(true);
       try {
-        // Usar la misma URL que en equiposform.js para mantener consistencia
-        const response = await axios.get('https://apex.oracle.com/pls/apex/erikworks/equipos/', {
+        // Usar la URL centralizada desde la configuración
+        const response = await axios.get(getApiUrl('EQUIPOS'), {
           headers: {
             'Accept': 'application/json'
           }

@@ -1,6 +1,7 @@
 // src/components/EquipoForm.js
 import { useState } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../config/api';
 
 function EquipoForm({ onAdd }) {
   const [formData, setFormData] = useState({
@@ -16,12 +17,11 @@ function EquipoForm({ onAdd }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (error) setError('');
   };
-  
-  // Función para verificar la información de la API
+    // Función para verificar la información de la API
   const checkApiInfo = async () => {
     try {
       setSubmitting(true);
-      const response = await axios.options('https://apex.oracle.com/pls/apex/erikworks/equipos/');
+      const response = await axios.options(getApiUrl('EQUIPOS'));
       setApiInfo(response.data);
       console.log('Información de la API:', response.data);
     } catch (err) {
@@ -42,11 +42,10 @@ function EquipoForm({ onAdd }) {
       params.append('ubicacion', formData.ubicacion);
       params.append('estado', formData.estado);
       
-      console.log('Enviando datos como FormData:', Object.fromEntries(params));
-      
+      console.log('Enviando datos como FormData:', Object.fromEntries(params));      
       // Primera opción: Usando URLSearchParams (application/x-www-form-urlencoded)
       const response = await axios.post(
-        'https://apex.oracle.com/pls/apex/erikworks/equipos/', 
+        getApiUrl('EQUIPOS'), 
         params,
         {
           headers: {
@@ -57,11 +56,10 @@ function EquipoForm({ onAdd }) {
       );
       
       // Si el método anterior falla, intenta con esto:
-      /* 
-      // Segunda opción: Usando JSON directo
+      /*      // Segunda opción: Usando JSON directo
       const response = await axios({
         method: 'post',
-        url: 'https://apex.oracle.com/pls/apex/erikworks/equipos/',
+        url: getApiUrl('EQUIPOS'),
         data: formData,
         headers: {
           'Content-Type': 'application/json',
@@ -79,10 +77,9 @@ function EquipoForm({ onAdd }) {
       if (err.message.includes('ORDS-25001')) {
         try {
           console.log('Intentando método alternativo con JSON directo...');
-          
-          const jsonResponse = await axios({
+            const jsonResponse = await axios({
             method: 'post',
-            url: 'https://apex.oracle.com/pls/apex/erikworks/equipos/',
+            url: getApiUrl('EQUIPOS'),
             data: formData,
             headers: {
               'Content-Type': 'application/json',
